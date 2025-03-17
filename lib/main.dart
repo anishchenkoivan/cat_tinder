@@ -155,8 +155,8 @@ class _HomePageState extends State<HomePage> {
 }
 
 class Button extends StatelessWidget {
-  final icon;
-  final action;
+  final IconData icon;
+  final VoidCallback action;
 
   const Button({super.key, required this.icon, required this.action});
 
