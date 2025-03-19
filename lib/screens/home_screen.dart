@@ -149,7 +149,7 @@ class _HomeScreenState extends State<HomeScreen> {
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
           Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 48),
+            padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 16),
             child: FutureBuilder<Cat>(
               future: _cat,
               builder: (context, snapshot) {
@@ -170,7 +170,7 @@ class _HomeScreenState extends State<HomeScreen> {
             ),
           ),
           Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 48),
+            padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 16),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
@@ -189,6 +189,7 @@ class _HomeScreenState extends State<HomeScreen> {
               ],
             ),
           ),
+          const SizedBox(height: kBottomNavigationBarHeight),
         ],
       ),
     );
