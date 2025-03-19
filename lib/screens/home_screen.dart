@@ -6,7 +6,6 @@ import '../models/cat.dart';
 import '../widgets/button.dart';
 import 'info_screen.dart';
 
-
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key, required this.title});
 
@@ -108,15 +107,17 @@ class _HomeScreenState extends State<HomeScreen> {
             mainAxisSize: MainAxisSize.min,
             children: [
               ClipRRect(
-                borderRadius: const BorderRadius.vertical(top: Radius.circular(12.0)),
+                borderRadius:
+                    const BorderRadius.vertical(top: Radius.circular(12.0)),
                 child: CachedNetworkImage(
                   imageUrl: cat.imageUrl,
                   height: 500,
                   width: double.infinity,
                   fit: BoxFit.cover,
-                  placeholder: (context, url) => const Center(child: CircularProgressIndicator()),
+                  placeholder: (context, url) =>
+                      const Center(child: CircularProgressIndicator()),
                   errorWidget: (context, error, stackTrace) =>
-                  const Icon(Icons.image_not_supported, size: 100),
+                      const Icon(Icons.image_not_supported, size: 100),
                 ),
               ),
               Padding(
@@ -124,8 +125,8 @@ class _HomeScreenState extends State<HomeScreen> {
                 child: Text(
                   cat.breedName,
                   style: Theme.of(context).textTheme.titleLarge?.copyWith(
-                    fontWeight: FontWeight.bold,
-                  ),
+                        fontWeight: FontWeight.bold,
+                      ),
                   textAlign: TextAlign.center,
                 ),
               ),
@@ -135,7 +136,6 @@ class _HomeScreenState extends State<HomeScreen> {
       ),
     );
   }
-
 
   @override
   Widget build(BuildContext context) {
@@ -156,9 +156,11 @@ class _HomeScreenState extends State<HomeScreen> {
                 if (snapshot.connectionState == ConnectionState.waiting) {
                   return _buildPlaceholderContainer();
                 } else if (snapshot.hasError) {
-                  return _buildPlaceholderContainer(child: Text('Error: ${snapshot.error}'));
+                  return _buildPlaceholderContainer(
+                      child: Text('Error: ${snapshot.error}'));
                 } else if (!snapshot.hasData) {
-                  return _buildPlaceholderContainer(child: const Text('No cat data available'));
+                  return _buildPlaceholderContainer(
+                      child: const Text('No cat data available'));
                 }
 
                 Cat cat = snapshot.data!;
@@ -167,19 +169,23 @@ class _HomeScreenState extends State<HomeScreen> {
               },
             ),
           ),
-
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 48),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Button(icon: Icons.arrow_circle_left_outlined, action: _dislike),
+                Button(
+                    icon: Icons.arrow_circle_left_outlined, action: _dislike),
                 Text(
                   'You liked $_counter ${_counter != 1 ? 'cats' : 'cat'}',
                   style: Theme.of(context).textTheme.titleLarge?.copyWith(
-                    fontWeight: FontWeight.bold,),
+                        fontWeight: FontWeight.bold,
+                      ),
                 ),
-                Button(icon: Icons.favorite, action: _like,)
+                Button(
+                  icon: Icons.favorite,
+                  action: _like,
+                )
               ],
             ),
           ),

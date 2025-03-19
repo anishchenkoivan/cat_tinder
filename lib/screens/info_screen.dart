@@ -2,7 +2,6 @@ import '../models/cat.dart';
 import 'package:flutter/material.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 
-
 class InfoScreen extends StatelessWidget {
   final Cat cat;
 
@@ -27,19 +26,26 @@ class InfoScreen extends StatelessWidget {
                 height: 400,
                 width: double.infinity,
                 fit: BoxFit.cover,
-                placeholder: (context, url) => const Center(child: CircularProgressIndicator()),
-                errorWidget: (context, url, error) => const Icon(Icons.image_not_supported, size: 100),
+                placeholder: (context, url) =>
+                    const Center(child: CircularProgressIndicator()),
+                errorWidget: (context, url, error) =>
+                    const Icon(Icons.image_not_supported, size: 100),
               ),
             ),
             const SizedBox(height: 16),
             Text(
               'Breed: ${cat.breedName}',
-              style: Theme.of(context).textTheme.headlineSmall?.copyWith(fontWeight: FontWeight.bold),
+              style: Theme.of(context)
+                  .textTheme
+                  .headlineSmall
+                  ?.copyWith(fontWeight: FontWeight.bold),
             ),
             const SizedBox(height: 8),
-            Text('Country: ${cat.country}', style: Theme.of(context).textTheme.bodyLarge),
+            Text('Country: ${cat.country}',
+                style: Theme.of(context).textTheme.bodyLarge),
             const SizedBox(height: 8),
-            Text('Lifespan: ${cat.lifespan} years', style: Theme.of(context).textTheme.bodyLarge),
+            Text('Lifespan: ${cat.lifespan} years',
+                style: Theme.of(context).textTheme.bodyLarge),
             const SizedBox(height: 8),
             Text(
               cat.description,
