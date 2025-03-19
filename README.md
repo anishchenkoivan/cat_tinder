@@ -1,16 +1,23 @@
 # cat_tinder
 
-A new Flutter project.
+Тиндер для котов.
 
-## Getting Started
+## Список фич
+* На главном экране изображение кота
+* Кота можно свайпнуть вправо или влево
+* Есть счетчик лайков
+* При нажатии на кота, открывается экран с детальным описанием
 
-This project is a starting point for a Flutter application.
+## Технические детали
+* Для запросов в [https://thecatapi.com](https://thecatapi.com) использован пакет http
+* Случайная картинка кота получается через endpoint /search
+* Изображение кота получается только если указана порода
+* Использован Navigator для открытия детального экрана
+* Использованы виджеты Row и Column
+* Использованы Statful и Stateless виджеты
+* Кнопки лайка и дизлайка - отдельные компоненты, сделанные на StatelessWidget
+* Сделана кастомная иконка приложения
 
-A few resources to get you started if this is your first Flutter project:
-
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
-
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+## Скриншоты
+![Home screen](./images/Screenshot-1.png)
+![Details screen](./images/Screenshot-2.png)
