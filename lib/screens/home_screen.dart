@@ -148,25 +148,31 @@ class _HomeScreenState extends State<HomeScreen> {
       body: Column(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 16),
-            child: FutureBuilder<Cat>(
-              future: _cat,
-              builder: (context, snapshot) {
-                if (snapshot.connectionState == ConnectionState.waiting) {
-                  return _buildPlaceholderContainer();
-                } else if (snapshot.hasError) {
-                  return _buildPlaceholderContainer(
-                      child: Text('Error: ${snapshot.error}'));
-                } else if (!snapshot.hasData) {
-                  return _buildPlaceholderContainer(
-                      child: const Text('No cat data available'));
-                }
+          SizedBox(
+            child: Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 16),
+              child: Stack(
+                children: [
+                  _buildPlaceholderContainer(),
+                  FutureBuilder<Cat>(
+                    future: _cat,
+                    builder: (context, snapshot) {
+                      if (snapshot.connectionState == ConnectionState.waiting) {
+                        return _buildPlaceholderContainer();
+                      } else if (snapshot.hasError) {
+                        return _buildPlaceholderContainer(
+                            child: Text('Error: ${snapshot.error}'));
+                      } else if (!snapshot.hasData) {
+                        return _buildPlaceholderContainer(
+                            child: const Text('No cat data available'));
+                      }
 
-                Cat cat = snapshot.data!;
-
-                return _buildCatContainer(context, cat);
-              },
+                      Cat cat = snapshot.data!;
+                      return _buildCatContainer(context, cat);
+                    },
+                  ),
+                ],
+              ),
             ),
           ),
           Padding(
@@ -179,8 +185,8 @@ class _HomeScreenState extends State<HomeScreen> {
                 Text(
                   'You liked $_counter ${_counter != 1 ? 'cats' : 'cat'}',
                   style: Theme.of(context).textTheme.titleLarge?.copyWith(
-                        fontWeight: FontWeight.bold,
-                      ),
+                    fontWeight: FontWeight.bold,
+                  ),
                 ),
                 Button(
                   icon: Icons.favorite,
