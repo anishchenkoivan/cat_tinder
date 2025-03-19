@@ -3,7 +3,6 @@ class Cat {
   final String country;
   final String description;
   final String lifespan;
-  final String wikipediaArticle;
   final String imageUrl;
 
   Cat({
@@ -11,7 +10,6 @@ class Cat {
     required this.country,
     required this.description,
     required this.lifespan,
-    required this.wikipediaArticle,
     required this.imageUrl,
   });
 
@@ -23,7 +21,6 @@ class Cat {
       country: breeds['origin'],
       description: breeds['description'],
       lifespan: breeds['life_span'],
-      wikipediaArticle: breeds['wikipedia_url'],
       imageUrl: json['url'],
     );
   }
