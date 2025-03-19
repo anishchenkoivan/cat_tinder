@@ -2,6 +2,8 @@
 
 Тиндер для котов.
 
+[Скачать apk](https://drive.google.com/file/d/1rG2gC2UbnMT1dnZz0mayXsatgK2yUS7H/view?usp=sharing)
+
 ## Список фич
 * На главном экране изображение кота
 * Кота можно свайпнуть вправо или влево
