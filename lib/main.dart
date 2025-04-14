@@ -1,8 +1,10 @@
+import 'package:cat_tinder/core/di/service_locator.dart';
 import 'package:flutter/material.dart';
 
-import 'screens/home_screen.dart';
+import 'presentation/screens/home_screen.dart';
 
 void main() {
+  setupLocator();
   runApp(const MyApp());
 }
 

@@ -1,8 +1,9 @@
-import 'package:cat_tinder/services/cat_fetch_service.dart';
 import 'package:flutter/material.dart';
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:get_it/get_it.dart';
 
-import '../models/cat.dart';
+import '../../data/models/cat_model.dart';
+import '../../domain/usecases/get_cat.dart';
 import '../widgets/button.dart';
 import 'info_screen.dart';
 
@@ -17,7 +18,8 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> {
   int _counter = 0;
-  late Future<Cat> _cat;
+  GetCat catProvider = GetIt.instance<GetCat>();
+  late Future<CatModel> _cat;
 
   @override
   void initState() {
@@ -36,7 +38,7 @@ class _HomeScreenState extends State<HomeScreen> {
     _updateCat();
   }
 
-  void _catInfo(Cat cat) {
+  void _catInfo(CatModel cat) {
     Navigator.push(
       context,
       MaterialPageRoute(builder: (context) => InfoScreen(cat: cat)),
@@ -45,7 +47,7 @@ class _HomeScreenState extends State<HomeScreen> {
 
   void _updateCat() {
     setState(() {
-      _cat = CatFetchService().getCat();
+      _cat = catProvider.getCat();
     });
   }
 
@@ -69,7 +71,7 @@ class _HomeScreenState extends State<HomeScreen> {
     );
   }
 
-  Widget _buildCatContainer(BuildContext context, Cat cat) {
+  Widget _buildCatContainer(BuildContext context, CatModel cat) {
     return GestureDetector(
       onTap: () => _catInfo(cat),
       child: Dismissible(
@@ -154,7 +156,7 @@ class _HomeScreenState extends State<HomeScreen> {
               child: Stack(
                 children: [
                   _buildPlaceholderContainer(),
-                  FutureBuilder<Cat>(
+                  FutureBuilder<CatModel>(
                     future: _cat,
                     builder: (context, snapshot) {
                       if (snapshot.connectionState == ConnectionState.waiting) {
@@ -167,7 +169,7 @@ class _HomeScreenState extends State<HomeScreen> {
                             child: const Text('No cat data available'));
                       }
 
-                      Cat cat = snapshot.data!;
+                      CatModel cat = snapshot.data!;
                       return _buildCatContainer(context, cat);
                     },
                   ),

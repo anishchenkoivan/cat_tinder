@@ -1,9 +1,9 @@
-import '../models/cat.dart';
+import '../../data/models/cat_model.dart';
 import 'package:flutter/material.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 
 class InfoScreen extends StatelessWidget {
-  final Cat cat;
+  final CatModel cat;
 
   const InfoScreen({super.key, required this.cat});
 
