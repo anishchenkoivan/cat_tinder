@@ -6,6 +6,7 @@ import '../../domain/repositories/cat_repository.dart';
 import '../../data/repositories/cat_repository_impl.dart';
 import '../../domain/usecases/get_cat.dart';
 import '../../domain/usecases/like.dart';
+import '../../presentation/bloc/like_bloc.dart';
 
 
 final getIt = GetIt.instance;
@@ -16,4 +17,6 @@ void setupLocator() {
 
   getIt.registerSingleton<LikeRepository>(InMemoryLikeRepository());
   getIt.registerSingleton<Like>(Like(repository: getIt<LikeRepository>()));
+  
+  getIt.registerFactory(() => LikeBloc(getIt<Like>(), getIt<GetCat>()));
 }

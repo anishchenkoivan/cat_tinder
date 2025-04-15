@@ -1,34 +1,54 @@
 import 'package:flutter/material.dart';
 import 'package:cached_network_image/cached_network_image.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:get_it/get_it.dart';
 
 import '../../data/models/cat_model.dart';
-import '../bloc/like_bloc.dart';
+import '../../domain/usecases/get_cat.dart';
 import '../widgets/button.dart';
 import 'info_screen.dart';
 
-class HomeScreen extends StatelessWidget {
-  final String title;
-
+class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key, required this.title});
 
-  void _catInfo(BuildContext context, CatModel cat) {
+  final String title;
+
+  @override
+  State<HomeScreen> createState() => _HomeScreenState();
+}
+
+class _HomeScreenState extends State<HomeScreen> {
+  int _counter = 0;
+  GetCat catProvider = GetIt.instance<GetCat>();
+  late Future<CatModel> _cat;
+
+  @override
+  void initState() {
+    super.initState();
+    _updateCat();
+  }
+
+  void _like() {
+    setState(() {
+      _counter++;
+    });
+    _updateCat();
+  }
+
+  void _dislike() {
+    _updateCat();
+  }
+
+  void _catInfo(CatModel cat) {
     Navigator.push(
       context,
       MaterialPageRoute(builder: (context) => InfoScreen(cat: cat)),
     );
   }
 
-  void _like(BuildContext context, state) async {
-    context.read<LikeBloc>().add(LikePressed(await state.cat));
-  }
-
-  void _likeWithCat(BuildContext context, CatModel cat) {
-    context.read<LikeBloc>().add(LikePressed(cat));
-  }
-
-  void _dislike(BuildContext context) {
-    context.read<LikeBloc>().add(DislikePressed());
+  void _updateCat() {
+    setState(() {
+      _cat = catProvider.getCat();
+    });
   }
 
   Widget _buildPlaceholderContainer({Widget? child}) {
@@ -53,16 +73,15 @@ class HomeScreen extends StatelessWidget {
 
   Widget _buildCatContainer(BuildContext context, CatModel cat) {
     return GestureDetector(
-      onTap: () => _catInfo(context, cat),
+      onTap: () => _catInfo(cat),
       child: Dismissible(
         key: UniqueKey(),
         direction: DismissDirection.horizontal,
         onDismissed: (direction) {
           if (direction == DismissDirection.startToEnd) {
-            // _like(context);
-            _likeWithCat(context, cat);
+            _like();
           } else if (direction == DismissDirection.endToStart) {
-            _dislike(context);
+            _dislike();
           }
         },
         background: Container(
@@ -125,7 +144,7 @@ class HomeScreen extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Theme.of(context).colorScheme.inversePrimary,
-        title: Text(title),
+        title: Text(widget.title),
         centerTitle: true,
       ),
       body: Column(
@@ -137,26 +156,22 @@ class HomeScreen extends StatelessWidget {
               child: Stack(
                 children: [
                   _buildPlaceholderContainer(),
-                  BlocBuilder<LikeBloc, MainState> (
-                    builder: (context, state) {
-                      return FutureBuilder<CatModel>(
-                        future: state.cat,
-                        builder: (context, snapshot) {
-                          if (snapshot.connectionState == ConnectionState.waiting) {
-                            return _buildPlaceholderContainer();
-                          } else if (snapshot.hasError) {
-                            return _buildPlaceholderContainer(
-                                child: Text('Error: ${snapshot.error}'));
-                          } else if (!snapshot.hasData) {
-                            return _buildPlaceholderContainer(
-                                child: const Text('No cat data available'));
-                          }
+                  FutureBuilder<CatModel>(
+                    future: _cat,
+                    builder: (context, snapshot) {
+                      if (snapshot.connectionState == ConnectionState.waiting) {
+                        return _buildPlaceholderContainer();
+                      } else if (snapshot.hasError) {
+                        return _buildPlaceholderContainer(
+                            child: Text('Error: ${snapshot.error}'));
+                      } else if (!snapshot.hasData) {
+                        return _buildPlaceholderContainer(
+                            child: const Text('No cat data available'));
+                      }
 
-                          CatModel cat = snapshot.data!;
-                          return _buildCatContainer(context, cat);
-                        },
-                      );
-                    }
+                      CatModel cat = snapshot.data!;
+                      return _buildCatContainer(context, cat);
+                    },
                   ),
                 ],
               ),
@@ -164,28 +179,22 @@ class HomeScreen extends StatelessWidget {
           ),
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 16),
-            child:
-            BlocBuilder<LikeBloc, MainState>(
-              builder: (context, state) {
-                return Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Button(
-                        icon: Icons.arrow_circle_left_outlined,
-                        action: () => _dislike(context)),
-                    Text(
-                      'You liked ${state.counter} ${state.counter != 1 ? 'cats' : 'cat'}',
-                      style: Theme.of(context).textTheme.titleLarge?.copyWith(
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
-                    Button(
-                      icon: Icons.favorite,
-                      action: () => _like(context, state),
-                    )
-                  ],
-                );
-              }
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Button(
+                    icon: Icons.arrow_circle_left_outlined, action: _dislike),
+                Text(
+                  'You liked $_counter ${_counter != 1 ? 'cats' : 'cat'}',
+                  style: Theme.of(context).textTheme.titleLarge?.copyWith(
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+                Button(
+                  icon: Icons.favorite,
+                  action: _like,
+                )
+              ],
             ),
           ),
           const SizedBox(height: kBottomNavigationBarHeight),
