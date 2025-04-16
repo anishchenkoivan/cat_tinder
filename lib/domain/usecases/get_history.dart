@@ -7,7 +7,6 @@ class GetHistory {
 
   GetHistory({required this.repository});
 
-  // List<HistoryCard> getHistory() => repository.getLikes().map((LikeModel like) => HistoryCard(like)).toList();
   List<LikeModel> getHistoryData() => repository.getLikes().toList();
 
 }

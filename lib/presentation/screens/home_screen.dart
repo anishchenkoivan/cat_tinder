@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:get_it/get_it.dart';
 
 import '../../data/models/cat_model.dart';
+import '../bloc/history_bloc.dart';
 import '../bloc/like_bloc.dart';
 import '../widgets/button.dart';
 import 'history_screen.dart';
@@ -23,7 +25,12 @@ class HomeScreen extends StatelessWidget {
   void _history(BuildContext context) {
     Navigator.push(
       context,
-      MaterialPageRoute(builder: (context) => HistoryScreen()),
+      MaterialPageRoute(builder:
+          (context) => BlocProvider(
+            create: (_) => GetIt.instance<HistoryBloc>(),
+              child: const HistoryScreen()
+          ),
+      ),
     );
   }
 

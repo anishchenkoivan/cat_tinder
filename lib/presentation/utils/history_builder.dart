@@ -10,4 +10,8 @@ class HistoryBuilder {
 
   List<HistoryCard> getHistoryCards() => historyProvider.getHistoryData().map((LikeModel like) => HistoryCard(like)).toList();
 
+  Map<String, bool> getDefaultFilter() {
+    var cards = getHistoryCards();
+    return { for (var c in cards.toSet()) c.data.cat.breedName : true };
+  }
 }

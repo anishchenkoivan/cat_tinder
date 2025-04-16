@@ -1,5 +1,7 @@
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:cat_tinder/presentation/bloc/history_bloc.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../data/models/like_model.dart';
 import 'button.dart';
@@ -47,7 +49,7 @@ class HistoryCard extends StatelessWidget {
                         data.cat.breedName,
                         style: Theme.of(context).textTheme.titleMedium?.copyWith(
                             // fontWeight: FontWeight.bold),
-                          fontSize: 24,
+                          fontSize: 20,
                         ),
                       ),
                       Text(
@@ -57,9 +59,15 @@ class HistoryCard extends StatelessWidget {
                     ],
                   ),
               ),
-              Button(
-                icon: Icons.delete,
-                action: () => {},
+              BlocBuilder<HistoryBloc, HistoryState>(
+                builder: (context, state) {
+                  return Button(
+                    icon: Icons.delete,
+                    action: () {
+                      context.read<HistoryBloc>().add(CardDeleted(data.id));
+                    },
+                  );
+                }
               ),
             ]
         ),
