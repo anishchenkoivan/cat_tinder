@@ -161,8 +161,23 @@ class HomeScreen extends StatelessWidget {
                             ConnectionState.waiting) {
                           return _buildPlaceholderContainer();
                         } else if (snapshot.hasError) {
+                          WidgetsBinding.instance.addPostFrameCallback((_) {
+                            showDialog(
+                              context: context,
+                              builder: (context) => AlertDialog(
+                                title: const Text('Error'),
+                                content: Text('Failed to load cat: ${snapshot.error}'),
+                                actions: [
+                                  TextButton(
+                                    onPressed: () => Navigator.of(context).pop(),
+                                    child: const Text('OK'),
+                                  ),
+                                ],
+                              ),
+                            );
+                          });
                           return _buildPlaceholderContainer(
-                              child: Text('Error: ${snapshot.error}'));
+                              child: const Text('An error occurred while loading cat data.'));
                         } else if (!snapshot.hasData) {
                           return _buildPlaceholderContainer(
                               child: const Text('No cat data available'));
