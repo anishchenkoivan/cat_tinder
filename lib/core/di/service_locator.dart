@@ -1,4 +1,6 @@
 import 'package:cat_tinder/domain/repositories/like_repository.dart';
+import 'package:cat_tinder/domain/usecases/get_history.dart';
+import 'package:cat_tinder/presentation/utils/history_builder.dart';
 import 'package:get_it/get_it.dart';
 
 import '../../data/repositories/like_repository_impl.dart';
@@ -19,4 +21,7 @@ void setupLocator() {
   getIt.registerSingleton<Like>(Like(repository: getIt<LikeRepository>()));
   
   getIt.registerFactory(() => LikeBloc(getIt<Like>(), getIt<GetCat>()));
+
+  getIt.registerSingleton<GetHistory>(GetHistory(repository: getIt<LikeRepository>()));
+  getIt.registerFactory(() => HistoryBuilder(getIt<GetHistory>()));
 }

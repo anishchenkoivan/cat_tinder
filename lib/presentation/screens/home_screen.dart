@@ -5,6 +5,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../data/models/cat_model.dart';
 import '../bloc/like_bloc.dart';
 import '../widgets/button.dart';
+import 'history_screen.dart';
 import 'info_screen.dart';
 
 class HomeScreen extends StatelessWidget {
@@ -16,6 +17,13 @@ class HomeScreen extends StatelessWidget {
     Navigator.push(
       context,
       MaterialPageRoute(builder: (context) => InfoScreen(cat: cat)),
+    );
+  }
+
+  void _history(BuildContext context) {
+    Navigator.push(
+      context,
+      MaterialPageRoute(builder: (context) => HistoryScreen()),
     );
   }
 
@@ -133,60 +141,69 @@ class HomeScreen extends StatelessWidget {
         children: [
           SizedBox(
             child: Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 16),
+              padding:
+                  const EdgeInsets.symmetric(horizontal: 16.0, vertical: 16),
               child: Stack(
                 children: [
                   _buildPlaceholderContainer(),
-                  BlocBuilder<LikeBloc, MainState> (
-                    builder: (context, state) {
-                      return FutureBuilder<CatModel>(
-                        future: state.cat,
-                        builder: (context, snapshot) {
-                          if (snapshot.connectionState == ConnectionState.waiting) {
-                            return _buildPlaceholderContainer();
-                          } else if (snapshot.hasError) {
-                            return _buildPlaceholderContainer(
-                                child: Text('Error: ${snapshot.error}'));
-                          } else if (!snapshot.hasData) {
-                            return _buildPlaceholderContainer(
-                                child: const Text('No cat data available'));
-                          }
+                  BlocBuilder<LikeBloc, MainState>(builder: (context, state) {
+                    return FutureBuilder<CatModel>(
+                      future: state.cat,
+                      builder: (context, snapshot) {
+                        if (snapshot.connectionState ==
+                            ConnectionState.waiting) {
+                          return _buildPlaceholderContainer();
+                        } else if (snapshot.hasError) {
+                          return _buildPlaceholderContainer(
+                              child: Text('Error: ${snapshot.error}'));
+                        } else if (!snapshot.hasData) {
+                          return _buildPlaceholderContainer(
+                              child: const Text('No cat data available'));
+                        }
 
-                          CatModel cat = snapshot.data!;
-                          return _buildCatContainer(context, cat);
-                        },
-                      );
-                    }
-                  ),
+                        CatModel cat = snapshot.data!;
+                        return _buildCatContainer(context, cat);
+                      },
+                    );
+                  }),
                 ],
               ),
             ),
           ),
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 16),
-            child:
-            BlocBuilder<LikeBloc, MainState>(
-              builder: (context, state) {
-                return Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Button(
-                        icon: Icons.arrow_circle_left_outlined,
-                        action: () => _dislike(context)),
-                    Text(
-                      'You liked ${state.counter} ${state.counter != 1 ? 'cats' : 'cat'}',
-                      style: Theme.of(context).textTheme.titleLarge?.copyWith(
-                        fontWeight: FontWeight.bold,
+            child: BlocBuilder<LikeBloc, MainState>(builder: (context, state) {
+              return Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Button(
+                      icon: Icons.arrow_circle_left_outlined,
+                      action: () => _dislike(context)),
+                  GestureDetector(
+                    onTap: () {
+                      _history(context);
+                    },
+                    child: Container(
+                      padding: EdgeInsets.all(20),
+                      decoration: BoxDecoration(
+                        border: Border.all(color: Colors.transparent),
+                        borderRadius: BorderRadius.circular(4),
+                      ),
+                      child: Text(
+                        'You liked ${state.counter} ${state.counter != 1 ? 'cats' : 'cat'}',
+                        style: Theme.of(context).textTheme.titleLarge?.copyWith(
+                          fontWeight: FontWeight.bold,
+                        ),
                       ),
                     ),
-                    Button(
-                      icon: Icons.favorite,
-                      action: () => _like(context, state),
-                    )
-                  ],
-                );
-              }
-            ),
+                    ),
+                  Button(
+                    icon: Icons.favorite,
+                    action: () => _like(context, state),
+                  )
+                ],
+              );
+            }),
           ),
           const SizedBox(height: kBottomNavigationBarHeight),
         ],
