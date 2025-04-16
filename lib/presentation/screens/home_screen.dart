@@ -25,11 +25,10 @@ class HomeScreen extends StatelessWidget {
   void _history(BuildContext context) {
     Navigator.push(
       context,
-      MaterialPageRoute(builder:
-          (context) => BlocProvider(
+      MaterialPageRoute(
+        builder: (context) => BlocProvider(
             create: (_) => GetIt.instance<HistoryBloc>(),
-              child: const HistoryScreen()
-          ),
+            child: const HistoryScreen()),
       ),
     );
   }
@@ -166,10 +165,12 @@ class HomeScreen extends StatelessWidget {
                               context: context,
                               builder: (context) => AlertDialog(
                                 title: const Text('Error'),
-                                content: Text('Failed to load cat: ${snapshot.error}'),
+                                content: Text(
+                                    'Failed to load cat: ${snapshot.error}'),
                                 actions: [
                                   TextButton(
-                                    onPressed: () => Navigator.of(context).pop(),
+                                    onPressed: () =>
+                                        Navigator.of(context).pop(),
                                     child: const Text('OK'),
                                   ),
                                 ],
@@ -177,7 +178,8 @@ class HomeScreen extends StatelessWidget {
                             );
                           });
                           return _buildPlaceholderContainer(
-                              child: const Text('An error occurred while loading cat data.'));
+                              child: const Text(
+                                  'An error occurred while loading cat data.'));
                         } else if (!snapshot.hasData) {
                           return _buildPlaceholderContainer(
                               child: const Text('No cat data available'));
@@ -214,11 +216,11 @@ class HomeScreen extends StatelessWidget {
                       child: Text(
                         'You liked ${state.counter} ${state.counter != 1 ? 'cats' : 'cat'}',
                         style: Theme.of(context).textTheme.titleLarge?.copyWith(
-                          fontWeight: FontWeight.bold,
-                        ),
+                              fontWeight: FontWeight.bold,
+                            ),
                       ),
                     ),
-                    ),
+                  ),
                   Button(
                     icon: Icons.favorite,
                     action: () => _like(context, state),

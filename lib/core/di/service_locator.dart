@@ -13,7 +13,6 @@ import '../../presentation/bloc/history_bloc.dart';
 import '../../presentation/bloc/like_bloc.dart';
 import '../../presentation/utils/filter_builder.dart';
 
-
 final getIt = GetIt.instance;
 
 void setupLocator() {
@@ -22,15 +21,19 @@ void setupLocator() {
 
   getIt.registerSingleton<LikeRepository>(InMemoryLikeRepository());
   getIt.registerSingleton<Like>(Like(repository: getIt<LikeRepository>()));
-  
+
   getIt.registerFactory(() => LikeBloc(getIt<Like>(), getIt<GetCat>()));
 
-  getIt.registerSingleton<GetHistory>(GetHistory(repository: getIt<LikeRepository>()));
+  getIt.registerSingleton<GetHistory>(
+      GetHistory(repository: getIt<LikeRepository>()));
   getIt.registerFactory(() => HistoryBuilder(getIt<GetHistory>()));
 
-  getIt.registerSingleton<DeleteLike>(DeleteLike(repository: getIt<LikeRepository>()));
+  getIt.registerSingleton<DeleteLike>(
+      DeleteLike(repository: getIt<LikeRepository>()));
 
-  getIt.registerFactory(() => HistoryBloc(historyBuilder: getIt<HistoryBuilder>(), deleteLike: getIt<DeleteLike>()));
+  getIt.registerFactory(() => HistoryBloc(
+      historyBuilder: getIt<HistoryBuilder>(),
+      deleteLike: getIt<DeleteLike>()));
 
   getIt.registerFactory(() => FilterBuilder(getIt<GetHistory>()));
 }

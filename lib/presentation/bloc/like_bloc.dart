@@ -21,9 +21,7 @@ class MainState {
   MainState(this.counter, this.cat);
 }
 
-class DislikeState {
-
-}
+class DislikeState {}
 
 class LikeBloc extends Bloc<MainEvent, MainState> {
   final Like like;

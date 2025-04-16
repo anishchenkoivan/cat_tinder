@@ -22,5 +22,4 @@ class FilterItem extends StatelessWidget {
       },
     );
   }
-
 }

@@ -27,51 +27,44 @@ class HistoryCard extends StatelessWidget {
         borderRadius: BorderRadius.circular(12),
       ),
       margin: const EdgeInsets.symmetric(vertical: 8, horizontal: 8),
-      child:
-        Row(
-          children:
-            [
-              ClipRRect(
-                borderRadius: const BorderRadius.all(Radius.circular(12.0)),
-                child: CachedNetworkImage(
-                  imageUrl: data.cat.imageUrl,
-                  width: 68,
-                  height: 68,
-                  fit: BoxFit.cover,
-                ),
-              ),
-              const SizedBox(width: 16),
-              Expanded(
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        data.cat.breedName,
-                        style: Theme.of(context).textTheme.titleMedium?.copyWith(
-                            // fontWeight: FontWeight.bold),
-                          fontSize: 20,
-                        ),
-                      ),
-                      Text(
-                        _formatDateTime(data.dateTime),
-                        style: Theme.of(context).textTheme.bodySmall,
-                      ),
-                    ],
-                  ),
-              ),
-              BlocBuilder<HistoryBloc, HistoryState>(
-                builder: (context, state) {
-                  return Button(
-                    icon: Icons.delete,
-                    action: () {
-                      context.read<HistoryBloc>().add(CardDeleted(data.id));
-                    },
-                  );
-                }
-              ),
-            ]
+      child: Row(children: [
+        ClipRRect(
+          borderRadius: const BorderRadius.all(Radius.circular(12.0)),
+          child: CachedNetworkImage(
+            imageUrl: data.cat.imageUrl,
+            width: 68,
+            height: 68,
+            fit: BoxFit.cover,
+          ),
         ),
+        const SizedBox(width: 16),
+        Expanded(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                data.cat.breedName,
+                style: Theme.of(context).textTheme.titleMedium?.copyWith(
+                      // fontWeight: FontWeight.bold),
+                      fontSize: 20,
+                    ),
+              ),
+              Text(
+                _formatDateTime(data.dateTime),
+                style: Theme.of(context).textTheme.bodySmall,
+              ),
+            ],
+          ),
+        ),
+        BlocBuilder<HistoryBloc, HistoryState>(builder: (context, state) {
+          return Button(
+            icon: Icons.delete,
+            action: () {
+              context.read<HistoryBloc>().add(CardDeleted(data.id));
+            },
+          );
+        }),
+      ]),
     );
   }
-
 }

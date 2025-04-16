@@ -6,5 +6,6 @@ class FilterBuilder {
 
   FilterBuilder(this.historyProvider);
 
-  List<FilterItem> getFilterItems(Map<String, bool> filter) => filter.keys.map((String breed) => FilterItem(breedName: breed)).toList();
+  List<FilterItem> getFilterItems(Map<String, bool> filter) =>
+      filter.keys.map((String breed) => FilterItem(breedName: breed)).toList();
 }

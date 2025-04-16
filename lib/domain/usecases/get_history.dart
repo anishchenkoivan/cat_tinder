@@ -8,5 +8,4 @@ class GetHistory {
   GetHistory({required this.repository});
 
   List<LikeModel> getHistoryData() => repository.getLikes().toList();
-
 }

@@ -13,11 +13,9 @@ class HistoryScreen extends StatefulWidget {
 
   @override
   HistoryScreenState createState() => HistoryScreenState();
-
 }
 
 class HistoryScreenState extends State<HistoryScreen> {
-
   final HistoryBuilder cardsProvider = GetIt.instance<HistoryBuilder>();
   bool filterVisible = false;
 
@@ -30,7 +28,10 @@ class HistoryScreenState extends State<HistoryScreen> {
   }
 
   List<HistoryCard> _getFilteredCards(HistoryState state) {
-    return cardsProvider.getHistoryCards().where((HistoryCard card) => state.filter[card.data.cat.breedName]!).toList();
+    return cardsProvider
+        .getHistoryCards()
+        .where((HistoryCard card) => state.filter[card.data.cat.breedName]!)
+        .toList();
   }
 
   @override
@@ -45,22 +46,19 @@ class HistoryScreenState extends State<HistoryScreen> {
           Positioned.fill(
             child: SingleChildScrollView(
               padding: const EdgeInsets.all(16.0),
-              child: BlocBuilder<HistoryBloc, HistoryState>(builder: (context, state) {
+              child: BlocBuilder<HistoryBloc, HistoryState>(
+                  builder: (context, state) {
                 return Column(
                   children: _getFilteredCards(state),
                 );
               }),
             ),
           ),
-          if (filterVisible)
-            FilterWindow(),
+          if (filterVisible) FilterWindow(),
           Positioned(
             bottom: MediaQuery.of(context).padding.bottom + 16,
             left: 16,
-            child: Button(
-                icon: Icons.sort,
-                action: _toggleFilterVisible
-            ),
+            child: Button(icon: Icons.sort, action: _toggleFilterVisible),
           ),
         ],
       ),

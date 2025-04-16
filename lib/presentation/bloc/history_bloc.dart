@@ -15,7 +15,6 @@ class CardFiltered extends HistoryEvent {
   final Map<String, bool> filter;
 
   CardFiltered(this.filter);
-
 }
 
 class HistoryState {
@@ -27,17 +26,14 @@ class HistoryState {
 class HistoryBloc extends Bloc<HistoryEvent, HistoryState> {
   final HistoryBuilder historyBuilder;
   final DeleteLike deleteLike;
-  HistoryBloc({required this.historyBuilder, required this.deleteLike}) : super(HistoryState(historyBuilder.getDefaultFilter())) {
-    on<CardFiltered>(
-        (event, emit) {
-          emit(HistoryState(event.filter));
-        }
-    );
-    on<CardDeleted>(
-        (event, emit) {
-          deleteLike.deleteLike(event.id);
-          emit(HistoryState(historyBuilder.getDefaultFilter()));
-        }
-    );
+  HistoryBloc({required this.historyBuilder, required this.deleteLike})
+      : super(HistoryState(historyBuilder.getDefaultFilter())) {
+    on<CardFiltered>((event, emit) {
+      emit(HistoryState(event.filter));
+    });
+    on<CardDeleted>((event, emit) {
+      deleteLike.deleteLike(event.id);
+      emit(HistoryState(historyBuilder.getDefaultFilter()));
+    });
   }
 }
