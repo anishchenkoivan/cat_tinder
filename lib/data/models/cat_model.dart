@@ -1,11 +1,11 @@
-class Cat {
+class CatModel {
   final String breedName;
   final String country;
   final String description;
   final String lifespan;
   final String imageUrl;
 
-  Cat({
+  CatModel({
     required this.breedName,
     required this.country,
     required this.description,
@@ -13,10 +13,10 @@ class Cat {
     required this.imageUrl,
   });
 
-  factory Cat.fromJson(Map<String, dynamic> json) {
+  factory CatModel.fromJson(Map<String, dynamic> json) {
     Map<String, dynamic> breeds = json['breeds'][0];
 
-    return Cat(
+    return CatModel(
       breedName: breeds['name'],
       country: breeds['origin'],
       description: breeds['description'],

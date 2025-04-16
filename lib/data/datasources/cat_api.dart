@@ -2,10 +2,10 @@ import 'dart:convert';
 
 import 'package:http/http.dart' as http;
 
-import '../models/cat.dart';
+import '../models/cat_model.dart';
 
-class CatFetchService {
-  Future<Cat> getCat() async {
+class CatApiFetcher {
+  Future<CatModel> getCat() async {
     const String url =
         'https://api.thecatapi.com/v1/images/search?has_breeds=1&limit=1';
     final response = await http.get(
@@ -18,7 +18,7 @@ class CatFetchService {
 
     if (response.statusCode == 200) {
       final List<dynamic> data = jsonDecode(response.body);
-      return Cat.fromJson(data[0]);
+      return CatModel.fromJson(data[0]);
     } else {
       throw Exception(
           'Failed to fetch cat data, status code: ${response.statusCode}');
