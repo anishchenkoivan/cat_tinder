@@ -19,7 +19,8 @@ class _NetworkAwareWrapperState extends State<NetworkAwareWrapper> {
   void initState() {
     super.initState();
     _subscription = Connectivity().onConnectivityChanged.listen((results) {
-      final isConnected = results.any((result) => result != ConnectivityResult.none);
+      final isConnected =
+          results.any((result) => result != ConnectivityResult.none);
 
       if (isConnected != _wasConnected) {
         _wasConnected = isConnected;
@@ -41,7 +42,6 @@ class _NetworkAwareWrapperState extends State<NetworkAwareWrapper> {
       }
     });
   }
-
 
   @override
   void dispose() {

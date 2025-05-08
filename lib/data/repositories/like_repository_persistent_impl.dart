@@ -51,16 +51,16 @@ class PersistentLikeRepository implements LikeRepository {
     _cache.add(like);
 
     _db.into(_db.likes).insert(
-      LikesCompanion.insert(
-        id: Value(id),
-        breedName: cat.breedName,
-        country: cat.country,
-        description: cat.description,
-        lifespan: cat.lifespan,
-        imageUrl: cat.imageUrl,
-        dateTimeColumn: datetime,
-      ),
-    );
+          LikesCompanion.insert(
+            id: Value(id),
+            breedName: cat.breedName,
+            country: cat.country,
+            description: cat.description,
+            lifespan: cat.lifespan,
+            imageUrl: cat.imageUrl,
+            dateTimeColumn: datetime,
+          ),
+        );
 
     return id;
   }
