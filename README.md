@@ -2,7 +2,7 @@
 
 Тиндер для котов.
 
-[Скачать apk](https://drive.google.com/file/d/1R8pgz_oZw4KYSddko50GGN4ApXv6ZoEb/view?usp=sharing)
+[Скачать apk](https://drive.google.com/file/d/1I75TnMqXfwCxPtfcu48tnKEnvkERvwSV/view?usp=sharing)
 
 ## Список фич
 * На главном экране изображение кота
