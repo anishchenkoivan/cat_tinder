@@ -40,3 +40,4 @@
 ![History screen](./images/Screenshot-3.png)
 ![Filter](./images/Screenshot-4.png)
 ![Error](./images/Screenshot-5.png)
+![Notification](./images/Screenshot-6.png)
