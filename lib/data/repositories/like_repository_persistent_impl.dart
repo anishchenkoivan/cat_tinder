@@ -16,6 +16,7 @@ class PersistentLikeRepository implements LikeRepository {
   PersistentLikeRepository(this._db);
 
   Future<void> init() async {
+    print("INITING");
     final rows = await _db.select(_db.likes).get();
     _cache.clear();
     for (final row in rows) {
@@ -35,6 +36,7 @@ class PersistentLikeRepository implements LikeRepository {
       _nextId = row.id >= _nextId ? row.id + 1 : _nextId;
     }
     _loaded = true;
+    print(_loaded);
   }
 
   void _ensureLoaded() {

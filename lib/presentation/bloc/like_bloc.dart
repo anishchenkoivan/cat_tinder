@@ -27,7 +27,7 @@ class LikeBloc extends Bloc<MainEvent, MainState> {
   final Like like;
   final GetCat getCat;
 
-  LikeBloc(this.like, this.getCat) : super(MainState(0, getCat.getCat())) {
+  LikeBloc(this.like, this.getCat) : super(MainState(like.repository.getLikesAmount(), getCat.getCat())) {
     on<LikePressed>((event, emit) {
       like.like(event.cat);
       _emitNewCat(emit);
