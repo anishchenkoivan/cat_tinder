@@ -4,9 +4,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import 'presentation/screens/home_screen.dart';
+import 'presentation/widgets/network_status_wrapper.dart';
 
-void main() {
-  setupLocator();
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await setupLocator();
   runApp(const MyApp());
 }
 
@@ -20,7 +22,10 @@ class MyApp extends StatelessWidget {
       ),
       home: BlocProvider(
         create: (_) => getIt<LikeBloc>(),
-        child: const HomeScreen(title: 'Cats'),
+        child: NetworkAwareWrapper(
+          child: HomeScreen(title: 'Cats'),
+        ),
+        // const HomeScreen(title: 'Cats'),
       ),
     );
   }

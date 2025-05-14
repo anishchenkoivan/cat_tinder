@@ -2,7 +2,7 @@
 
 Тиндер для котов.
 
-[Скачать apk](https://drive.google.com/file/d/1R8pgz_oZw4KYSddko50GGN4ApXv6ZoEb/view?usp=sharing)
+[Скачать apk](https://drive.google.com/file/d/1I75TnMqXfwCxPtfcu48tnKEnvkERvwSV/view?usp=sharing)
 
 ## Список фич
 * На главном экране изображение кота
@@ -14,6 +14,7 @@
 * При фильтрации/удалении краточек в истории изменения происходят мгновенно
 * При длительной загрузке показывается progress bar.
 * При ошибке сети отображается диалог с ошибкой
+* Данные сохраняются при выходе из приложения
 
 ## Технические детали
 * Для запросов в [https://thecatapi.com](https://thecatapi.com) использован пакет http
@@ -29,6 +30,9 @@
 * Использование get_it для DI
 * CircularProgressionIndicator для отображения загрузки
 * AlertDialog для отображения ошибки сети
+* Использован connectivity_plus для проверки наличия сети и snackbar для отображения статуса
+* Добавлено кэширования изображений через cached_network_image
+* Локальное хранилище на Drift
 
 ## Скриншоты
 ![Home screen](./images/Screenshot-1.png)
@@ -36,3 +40,4 @@
 ![History screen](./images/Screenshot-3.png)
 ![Filter](./images/Screenshot-4.png)
 ![Error](./images/Screenshot-5.png)
+![Notification](./images/Screenshot-6.png)
